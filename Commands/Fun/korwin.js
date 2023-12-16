@@ -4,7 +4,9 @@ const {
 	StringSelectMenuOptionBuilder,
 	SlashCommandBuilder,
 	ComponentType,
-	PermissionFlagsBits
+	PermissionFlagsBits,
+	EmbedBuilder,
+	AttachmentBuilder
 } = require("discord.js");
 
 const korwin = require("../../Data/korwin/korwin.json");
@@ -18,15 +20,24 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("korwin")
 		.setDescription("Utwórz wypowiedź Janusza Korwina-Mikkego.")
-		.addBooleanOption(option => option
+		.addSubcommand(subcommand =>
+			subcommand
+			.setName('custom')
+			.setDescription('Generowanie własnej wypowiedzi.'))
+		.addSubcommand(subcommand =>
+			subcommand
 			.setName('random')
-			.setDescription('Losowe generowanie wypowiedzi.')),
+			.setDescription('Generowanie losowej wypowiedzi.'))
+		.addSubcommand(subcommand =>
+			subcommand
+			.setName('list')
+			.setDescription('Lista możliwych części wypowiedzi.')),
 	async execute(interaction) {
 
 		var part1, part2, part3, part4, part5, part6;
 		var selection1, selection2, selection3, selection4, selection5, selection6;
 
-		if (interaction.options.getBoolean('random') == true) {
+		if (interaction.options.getSubcommand() == ('random')) {
 			part1 = (korwin.part1[getRandomInt(korwin.part1.length)]);
 			part2 = (korwin.part2[getRandomInt(korwin.part2.length)]);
 			part3 = (korwin.part3[getRandomInt(korwin.part3.length)]);
@@ -36,211 +47,286 @@ module.exports = {
 			return interaction.reply(`${part1} ${part2} ${part3} ${part4}, ${part5}, ${part6}`);
 		}
 
+		if (interaction.options.getSubcommand() == ('custom')) {
+			await interaction.deferReply()
+			// 1
+			const select1 = new StringSelectMenuBuilder()
+				.setCustomId('select1')
+				.setPlaceholder('Wybierz początek swojej wypowiedzi.')
 
-		await interaction.deferReply()
-		// 1
-		const select1 = new StringSelectMenuBuilder()
-			.setCustomId('select1')
-			.setPlaceholder('Wybierz początek swojej wypowiedzi.')
+			korwin.part1.forEach((x) => {
+				select1.addOptions(
+					new StringSelectMenuOptionBuilder()
+					.setLabel(x)
+					.setValue(x),
+				)
+			})
 
-		korwin.part1.forEach((x) => {
-			select1.addOptions(
-				new StringSelectMenuOptionBuilder()
-				.setLabel(x)
-				.setValue(x),
-			)
-		})
-
-		const row1 = new ActionRowBuilder()
-			.addComponents(select1);
-
-
-		// 2
-		const select2 = new StringSelectMenuBuilder()
-			.setCustomId('select2')
-			.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
-
-		korwin.part2.forEach((x) => {
-			select2.addOptions(
-				new StringSelectMenuOptionBuilder()
-				.setLabel(x)
-				.setValue(x),
-			)
-		})
-
-		const row2 = new ActionRowBuilder()
-			.addComponents(select2);
-
-		// 3
-		const select3 = new StringSelectMenuBuilder()
-			.setCustomId('select3')
-			.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
-			
-		korwin.part3.forEach((x) => {
-			select3.addOptions(
-				new StringSelectMenuOptionBuilder()
-				.setLabel(x)
-				.setValue(x),
-			)
-		})
-
-		const row3 = new ActionRowBuilder()
-			.addComponents(select3);
-
-		// 4
-		const select4 = new StringSelectMenuBuilder()
-			.setCustomId('select4')
-			.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
-			
-		korwin.part4.forEach((x) => {
-			select4.addOptions(
-				new StringSelectMenuOptionBuilder()
-				.setLabel(x)
-				.setValue(x),
-			)
-		})
-
-		const row4 = new ActionRowBuilder()
-			.addComponents(select4);
-
-		// 5
-		const select5 = new StringSelectMenuBuilder()
-			.setCustomId('select5')
-			.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
-			
-		korwin.part5.forEach((x) => {	
-			select5.addOptions(
-				new StringSelectMenuOptionBuilder()
-				.setLabel(x)
-				.setValue(x),
-			)
-		})
-		
-		const row5 = new ActionRowBuilder()
-			.addComponents(select5);
-
-		// 6
-		const select6 = new StringSelectMenuBuilder()
-			.setCustomId('select6')
-			.setPlaceholder('Wybierz zakończenie swojej wypowiedzi.')
-			
-		korwin.part6.forEach((x) => {
-			select6.addOptions(
-				new StringSelectMenuOptionBuilder()
-				.setLabel(x)
-				.setValue(x),
-			)
-		})
-		
-		const row6 = new ActionRowBuilder()
-			.addComponents(select6);
+			const row1 = new ActionRowBuilder()
+				.addComponents(select1);
 
 
+			// 2
+			const select2 = new StringSelectMenuBuilder()
+				.setCustomId('select2')
+				.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
 
-		const response = await interaction.editReply({content: `_ _`, components: [row1]});
-		///////////////////////////////////////////////////////////
-		/////////////////////////part1/////////////////////////////
-		///////////////////////////////////////////////////////////
+			korwin.part2.forEach((x) => {
+				select2.addOptions(
+					new StringSelectMenuOptionBuilder()
+					.setLabel(x)
+					.setValue(x),
+				)
+			})
+
+			const row2 = new ActionRowBuilder()
+				.addComponents(select2);
+
+			// 3
+			const select3 = new StringSelectMenuBuilder()
+				.setCustomId('select3')
+				.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
+
+			korwin.part3.forEach((x) => {
+				select3.addOptions(
+					new StringSelectMenuOptionBuilder()
+					.setLabel(x)
+					.setValue(x),
+				)
+			})
+
+			const row3 = new ActionRowBuilder()
+				.addComponents(select3);
+
+			// 4
+			const select4 = new StringSelectMenuBuilder()
+				.setCustomId('select4')
+				.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
+
+			korwin.part4.forEach((x) => {
+				select4.addOptions(
+					new StringSelectMenuOptionBuilder()
+					.setLabel(x)
+					.setValue(x),
+				)
+			})
+
+			const row4 = new ActionRowBuilder()
+				.addComponents(select4);
+
+			// 5
+			const select5 = new StringSelectMenuBuilder()
+				.setCustomId('select5')
+				.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
+
+			korwin.part5.forEach((x) => {
+				select5.addOptions(
+					new StringSelectMenuOptionBuilder()
+					.setLabel(x)
+					.setValue(x),
+				)
+			})
+
+			const row5 = new ActionRowBuilder()
+				.addComponents(select5);
+
+			// 6
+			const select6 = new StringSelectMenuBuilder()
+				.setCustomId('select6')
+				.setPlaceholder('Wybierz zakończenie swojej wypowiedzi.')
+
+			korwin.part6.forEach((x) => {
+				select6.addOptions(
+					new StringSelectMenuOptionBuilder()
+					.setLabel(x)
+					.setValue(x),
+				)
+			})
+
+			const row6 = new ActionRowBuilder()
+				.addComponents(select6);
 
 
-		const collector1 = response.createMessageComponentCollector({
-			componentType: ComponentType.StringSelect,
-			filter: i => i.user.id === interaction.user.id,
-			time: 3600000
-		});
 
-		collector1.on('collect', async i => {
-			selection1 = i.values[0];
-			await interaction.editReply({content: `${selection1}`, components: [row2]});
-			collector1.stop();
-			i.reply({content: `Wybrano początek: \`${selection1}\``, ephemeral: true})
-
+			const response = await interaction.editReply({
+				content: `_ _`,
+				components: [row1]
+			});
 			///////////////////////////////////////////////////////////
-			/////////////////////////part2/////////////////////////////
+			/////////////////////////part1/////////////////////////////
 			///////////////////////////////////////////////////////////
 
-			const collector2 = response.createMessageComponentCollector({
+
+			const collector1 = response.createMessageComponentCollector({
 				componentType: ComponentType.StringSelect,
 				filter: i => i.user.id === interaction.user.id,
 				time: 3600000
 			});
 
-			collector2.on('collect', async i => {
-				selection2 = i.values[0];
-				await interaction.editReply({content: `${selection1} ${selection2}`, components: [row3]});
-				collector2.stop();
-				i.reply({content: `Wybrano kontynuację: \`${selection2}\``, ephemeral: true})
+			collector1.on('collect', async i => {
+				selection1 = i.values[0];
+				await interaction.editReply({
+					content: `${selection1}`,
+					components: [row2]
+				});
+				collector1.stop();
+				i.reply({
+					content: `Wybrano początek: \`${selection1}\``,
+					ephemeral: true
+				})
 
 				///////////////////////////////////////////////////////////
-				/////////////////////////part3/////////////////////////////
+				/////////////////////////part2/////////////////////////////
 				///////////////////////////////////////////////////////////
 
-				const collector3 = response.createMessageComponentCollector({
+				const collector2 = response.createMessageComponentCollector({
 					componentType: ComponentType.StringSelect,
 					filter: i => i.user.id === interaction.user.id,
 					time: 3600000
 				});
-	
-				collector3.on('collect', async i => {
-					selection3 = i.values[0];
-					await interaction.editReply({content: `${selection1} ${selection2} ${selection3}`, components: [row4]});
-					collector3.stop();
-					i.reply({content: `Wybrano kontynuację: \`${selection3}\``, ephemeral: true})
-	
+
+				collector2.on('collect', async i => {
+					selection2 = i.values[0];
+					await interaction.editReply({
+						content: `${selection1} ${selection2}`,
+						components: [row3]
+					});
+					collector2.stop();
+					i.reply({
+						content: `Wybrano kontynuację: \`${selection2}\``,
+						ephemeral: true
+					})
+
 					///////////////////////////////////////////////////////////
-					/////////////////////////part4/////////////////////////////
+					/////////////////////////part3/////////////////////////////
 					///////////////////////////////////////////////////////////
 
-					const collector4 = response.createMessageComponentCollector({
+					const collector3 = response.createMessageComponentCollector({
 						componentType: ComponentType.StringSelect,
 						filter: i => i.user.id === interaction.user.id,
 						time: 3600000
 					});
-		
-					collector4.on('collect', async i => {
-						selection4 = i.values[0];
-						await interaction.editReply({content: `${selection1} ${selection2} ${selection3} ${selection4},`, components: [row5]});
-						collector4.stop();
-						i.reply({content: `Wybrano kontynuację: \`${selection4}\``, ephemeral: true})
-		
+
+					collector3.on('collect', async i => {
+						selection3 = i.values[0];
+						await interaction.editReply({
+							content: `${selection1} ${selection2} ${selection3}`,
+							components: [row4]
+						});
+						collector3.stop();
+						i.reply({
+							content: `Wybrano kontynuację: \`${selection3}\``,
+							ephemeral: true
+						})
+
 						///////////////////////////////////////////////////////////
-						/////////////////////////part5/////////////////////////////
+						/////////////////////////part4/////////////////////////////
 						///////////////////////////////////////////////////////////
 
-						const collector5 = response.createMessageComponentCollector({
+						const collector4 = response.createMessageComponentCollector({
 							componentType: ComponentType.StringSelect,
 							filter: i => i.user.id === interaction.user.id,
 							time: 3600000
 						});
 
-						collector5.on('collect', async i => {
-							selection5 = i.values[0];
-							await interaction.editReply({content: `${selection1} ${selection2} ${selection3} ${selection4}, ${selection5},`, components: [row6]});
-							collector5.stop();
-							i.reply({content: `Wybrano kontynuację: \`${selection5}\``, ephemeral: true})
-			
+						collector4.on('collect', async i => {
+							selection4 = i.values[0];
+							await interaction.editReply({
+								content: `${selection1} ${selection2} ${selection3} ${selection4},`,
+								components: [row5]
+							});
+							collector4.stop();
+							i.reply({
+								content: `Wybrano kontynuację: \`${selection4}\``,
+								ephemeral: true
+							})
+
 							///////////////////////////////////////////////////////////
-							/////////////////////////part6/////////////////////////////
+							/////////////////////////part5/////////////////////////////
 							///////////////////////////////////////////////////////////
 
-							const collector6 = response.createMessageComponentCollector({
+							const collector5 = response.createMessageComponentCollector({
 								componentType: ComponentType.StringSelect,
 								filter: i => i.user.id === interaction.user.id,
 								time: 3600000
 							});
 
-							collector6.on('collect', async i => {
-								selection6 = i.values[0];
-								await interaction.editReply({content: `${selection1} ${selection2} ${selection3} ${selection4}, ${selection5}, ${selection6}`, components: []});
-								collector6.stop();
-								i.reply({content: `Wybrano zakończenie: \`${selection6}\``, ephemeral: true})
-				
-								
+							collector5.on('collect', async i => {
+								selection5 = i.values[0];
+								await interaction.editReply({
+									content: `${selection1} ${selection2} ${selection3} ${selection4}, ${selection5},`,
+									components: [row6]
+								});
+								collector5.stop();
+								i.reply({
+									content: `Wybrano kontynuację: \`${selection5}\``,
+									ephemeral: true
+								})
+
+								///////////////////////////////////////////////////////////
+								/////////////////////////part6/////////////////////////////
+								///////////////////////////////////////////////////////////
+
+								const collector6 = response.createMessageComponentCollector({
+									componentType: ComponentType.StringSelect,
+									filter: i => i.user.id === interaction.user.id,
+									time: 3600000
+								});
+
+								collector6.on('collect', async i => {
+									selection6 = i.values[0];
+									await interaction.editReply({
+										content: `${selection1} ${selection2} ${selection3} ${selection4}, ${selection5}, ${selection6}`,
+										components: []
+									});
+									collector6.stop();
+									i.reply({
+										content: `Wybrano zakończenie: \`${selection6}\``,
+										ephemeral: true
+									})
+
+
+								});
 							});
 						});
 					});
 				});
 			});
-		});
+		}
+
+		if (interaction.options.getSubcommand() == ('list')) {
+
+			const file = new AttachmentBuilder("Data/korwin/korwin.png");
+
+			// const korwinEmbed1 = new EmbedBuilder()
+			// 	.setColor("Random")
+			// 	.setTitle("Początek")
+			// 	.setDescription(`• ${korwin.part1.join('\n• ')}`)
+			// const korwinEmbed2 = new EmbedBuilder()
+			// 	.setColor("Random")
+			// 	.setTitle("Kontynuacja")
+			// 	.setDescription(`• ${korwin.part2.join('\n• ')}`)
+			// const korwinEmbed3 = new EmbedBuilder()
+			// 	.setColor("Random")
+			// 	.setTitle("Kontynuacja")
+			// 	.setDescription(`• ${korwin.part3.join('\n• ')}`)
+			// const korwinEmbed4 = new EmbedBuilder()
+			// 	.setColor("Random")
+			// 	.setTitle("Kontynuacja")
+			// 	.setDescription(`• ${korwin.part4.join('\n• ')}`)
+			// const korwinEmbed5 = new EmbedBuilder()
+			// 	.setColor("Random")
+			// 	.setTitle("Kontynuacja")
+			// 	.setDescription(`• ${korwin.part5.join('\n• ')}`)
+			// const korwinEmbed6 = new EmbedBuilder()
+			// 	.setColor("Random")
+			// 	.setTitle("Zakończenie")
+			// 	.setDescription(`• ${korwin.part6.join('\n• ')}`)
+
+			interaction.reply({
+				ephemeral: true, files: [file]
+			})
+		}
+
 	}
 }
