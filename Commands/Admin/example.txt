@@ -1,0 +1,23 @@
+const { SlashCommandBuilder, CommandInteraction, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
+const { localisationGet } = require("../../Functions/localisationGet.js")
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName("name")
+		.setDescription("description")
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator) // only allowed for admin users
+		.addStringOption(option =>
+			option.setName("platform")
+				.setDescription("Meme platform (optional)")
+				.addChoices(
+					{ name: "Reddit", value: "reddit" },
+					{ name: "Giphy", value: "giphy" }
+				)
+		),
+
+	async execute(interaction, client) {
+
+		const localisation = await localisationGet(interaction.guild, interaction)
+
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"error": "An error has occured.",
+
+	"help_nodescription": "There is no description for this command.",
+	"help_selectcategory": "See lists of commands by selecting a category down below!",
+	"help_buttonplaceholder": "Find a category",
+
+	"language_change_alreadyset": "Server's language is already set to ${language}.",
+	"language_changeconfirm": "Server's language has been changed to ${language}.",
+
+	"experience_gettolvl": "You need to get to level **${target_level}**",
+	"experience_current": "You have **${current_experience}** experience.",
+	"experience_nodifference": "You already have this experience level.",
+	"experience_difference_more": "You need **${experience_difference}** more experience.",
+	"experience_difference_less": "You need **${experience_difference}** less experience.",
+	"experience_sum": "The sum is **${target_level}**"
+}

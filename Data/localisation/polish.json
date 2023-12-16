@@ -1,0 +1,13 @@
+{
+	"error": "Wystąpił błąd.",
+
+	"language_change_alreadyset": "Język serwera jest już ustawiony na ${language}.",
+	"language_changeconfirm": "Zmieniono język serwera na ${language}.",
+
+	"experience_gettolvl": "Musisz osiągnąć poziom **${target_level}**.",
+	"experience_current": "Posiadasz **${current_experience}** doświadczenia.",
+	"experience_nodifference": "Już posiadasz ten poziom doświadczenia.",
+	"experience_difference_more": "Potrzebujesz jeszcze **${experience_difference}** więcej doświadczenia.",
+	"experience_difference_less": "Potrzebujesz jeszcze **${experience_difference}** mniej doświadczenia.",
+	"experience_sum": "Suma to **${target_level}**."
+}

@@ -1,0 +1,29 @@
+{
+	"name": "mangobot",
+	"version": "1.0.1",
+	"description": "a bot about mangoes... or not",
+	"main": "index.js",
+	"dependencies": {
+		"ascii-table": "^0.0.9",
+		"discord-api-types": "^0.37.18",
+		"discord-fetch-all": "^3.0.2",
+		"discord.js": "^14.11.0",
+		"eris": "^0.17.1",
+		"express": "^4.18.2",
+		"fs": "^0.0.1-security",
+		"mongoose": "^6.12.0",
+		"opusscript": "^0.0.8",
+		"path": "^0.12.7",
+		"tweetnacl": "^1.0.3",
+		"wokcommands": "^2.1.0",
+		"ws": "^8.11.0"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "dudek",
+	"license": "ISC",
+	"engines": {
+		"node": "16.11"
+	}
+}
