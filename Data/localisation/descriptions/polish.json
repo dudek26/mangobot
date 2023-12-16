@@ -2,6 +2,7 @@
 	"help": "Pokaż listę wszystkich komend z bota Discord.",
 	"ping": "Sprawdź ping bota.",
 	"experience": "Oblicz doświadczenie w Minecraft.",
-	"language": "Ustaw język bota."
+	"language": "Ustaw język bota.",
+	"korwin": "Generator wypowiedzi Korwina."
 }
   

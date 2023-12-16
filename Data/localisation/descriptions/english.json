@@ -2,5 +2,6 @@
 	"help": "Get a list of all the commands from the discord bot.",
 	"ping": "Check the ping of the bot.",
 	"experience": "Calculate Minecraft experience.",
-	"language": "Set the language of the bot."
+	"language": "Set the language of the bot.",
+	"korwin": "Korwin's statement generator."
 }
