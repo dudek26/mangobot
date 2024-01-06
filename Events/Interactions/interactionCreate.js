@@ -4,7 +4,10 @@ module.exports = {
 	name: "interactionCreate",
 
 	async execute(interaction, client) {
-		if (!interaction.guild) return interaction.reply("Sorry, I don't use DMs. Please use my commands on a server.");
+		if (!interaction.guild)
+			return interaction.reply(
+				"Sorry, I don't use DMs. Please use my commands on a server."
+			);
 		const { customId, values, guild, member } = interaction; // you need to destructure values from interaction first to use it below
 		if (interaction.isChatInputCommand()) {
 			const command = client.commands.get(interaction.commandName);
@@ -12,16 +15,23 @@ module.exports = {
 				return interaction.reply({ content: "outdated command" });
 			}
 			var currentdate = new Date();
-			var datetime = currentdate.getDate() + "/"
-				+ (currentdate.getMonth() + 1) + "/"
-				+ currentdate.getFullYear() + " "
-				+ currentdate.getHours() + ":"
-				+ currentdate.getMinutes() + ":"
-				+ currentdate.getSeconds();
-			console.log(`  ❕ (${datetime}) ${interaction.user.tag} (ID: ${interaction.user.id}) used a "${interaction.commandName}" slash command on "${interaction.guild.name}" server (channel ID: ${interaction.channel.id}, server ID: ${interaction.guild.id})`)
-			command.execute(interaction, client).catch(err => console.log(err));
+			var datetime =
+				currentdate.getDate() +
+				"/" +
+				(currentdate.getMonth() + 1) +
+				"/" +
+				currentdate.getFullYear() +
+				" " +
+				currentdate.getHours() +
+				":" +
+				currentdate.getMinutes() +
+				":" +
+				currentdate.getSeconds();
+			console.log(
+				`  ❕ (${datetime}) ${interaction.user.tag} (ID: ${interaction.user.id}) used a "${interaction.commandName}" slash command on "${interaction.guild.name}" server (channel ID: ${interaction.channel.id}, server ID: ${interaction.guild.id})`
+			);
+			command.execute(interaction, client).catch((err) => console.log(err));
 		} else if (interaction.isButton()) {
-
 			if (customId == "verify") {
 				const role = interaction.guild.roles.cache.get("1011041531114815579");
 				return interaction.member.roles.add(role).then((member) =>
