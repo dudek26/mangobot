@@ -4,6 +4,7 @@
 	"description": "a bot about mangoes... or not",
 	"main": "index.js",
 	"dependencies": {
+		"@napi-rs/canvas": "^0.1.44",
 		"ascii-table": "^0.0.9",
 		"discord-api-types": "^0.37.18",
 		"discord-fetch-all": "^3.0.2",

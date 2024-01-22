@@ -6,7 +6,7 @@ const {
 	ComponentType,
 	PermissionFlagsBits,
 	EmbedBuilder,
-	AttachmentBuilder
+	AttachmentBuilder,
 } = require("discord.js");
 
 const korwin = require("../../Data/korwin/korwin.json");
@@ -20,160 +20,142 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("korwin")
 		.setDescription("Utwórz wypowiedź Janusza Korwina-Mikkego.")
-		.addSubcommand(subcommand =>
+		.addSubcommand((subcommand) =>
 			subcommand
-			.setName('custom')
-			.setDescription('Generowanie własnej wypowiedzi.'))
-		.addSubcommand(subcommand =>
+				.setName("custom")
+				.setDescription("Generowanie własnej wypowiedzi.")
+		)
+		.addSubcommand((subcommand) =>
 			subcommand
-			.setName('random')
-			.setDescription('Generowanie losowej wypowiedzi.'))
-		.addSubcommand(subcommand =>
+				.setName("random")
+				.setDescription("Generowanie losowej wypowiedzi.")
+		)
+		.addSubcommand((subcommand) =>
 			subcommand
-			.setName('list')
-			.setDescription('Lista możliwych części wypowiedzi.')),
+				.setName("list")
+				.setDescription("Lista możliwych części wypowiedzi.")
+		),
 	async execute(interaction) {
-
 		var part1, part2, part3, part4, part5, part6;
 		var selection1, selection2, selection3, selection4, selection5, selection6;
 
-		if (interaction.options.getSubcommand() == ('random')) {
-			part1 = (korwin.part1[getRandomInt(korwin.part1.length)]);
-			part2 = (korwin.part2[getRandomInt(korwin.part2.length)]);
-			part3 = (korwin.part3[getRandomInt(korwin.part3.length)]);
-			part4 = (korwin.part4[getRandomInt(korwin.part4.length)]);
-			part5 = (korwin.part5[getRandomInt(korwin.part5.length)]);
-			part6 = (korwin.part6[getRandomInt(korwin.part6.length)]);
-			return interaction.reply(`${part1} ${part2} ${part3} ${part4}, ${part5}, ${part6}`);
+		if (interaction.options.getSubcommand() == "random") {
+			part1 = korwin.part1[getRandomInt(korwin.part1.length)];
+			part2 = korwin.part2[getRandomInt(korwin.part2.length)];
+			part3 = korwin.part3[getRandomInt(korwin.part3.length)];
+			part4 = korwin.part4[getRandomInt(korwin.part4.length)];
+			part5 = korwin.part5[getRandomInt(korwin.part5.length)];
+			part6 = korwin.part6[getRandomInt(korwin.part6.length)];
+			return interaction.reply(
+				`${part1} ${part2} ${part3} ${part4}, ${part5}, ${part6}`
+			);
 		}
 
-		if (interaction.options.getSubcommand() == ('custom')) {
-			await interaction.deferReply()
+		if (interaction.options.getSubcommand() == "custom") {
+			await interaction.deferReply();
 			// 1
 			const select1 = new StringSelectMenuBuilder()
-				.setCustomId('select1')
-				.setPlaceholder('Wybierz początek swojej wypowiedzi.')
+				.setCustomId("select1")
+				.setPlaceholder("Wybierz początek swojej wypowiedzi.");
 
 			korwin.part1.forEach((x) => {
 				select1.addOptions(
-					new StringSelectMenuOptionBuilder()
-					.setLabel(x)
-					.setValue(x),
-				)
-			})
+					new StringSelectMenuOptionBuilder().setLabel(x).setValue(x)
+				);
+			});
 
-			const row1 = new ActionRowBuilder()
-				.addComponents(select1);
-
+			const row1 = new ActionRowBuilder().addComponents(select1);
 
 			// 2
 			const select2 = new StringSelectMenuBuilder()
-				.setCustomId('select2')
-				.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
+				.setCustomId("select2")
+				.setPlaceholder("Wybierz kontynuację swojej wypowiedzi.");
 
 			korwin.part2.forEach((x) => {
 				select2.addOptions(
-					new StringSelectMenuOptionBuilder()
-					.setLabel(x)
-					.setValue(x),
-				)
-			})
+					new StringSelectMenuOptionBuilder().setLabel(x).setValue(x)
+				);
+			});
 
-			const row2 = new ActionRowBuilder()
-				.addComponents(select2);
+			const row2 = new ActionRowBuilder().addComponents(select2);
 
 			// 3
 			const select3 = new StringSelectMenuBuilder()
-				.setCustomId('select3')
-				.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
+				.setCustomId("select3")
+				.setPlaceholder("Wybierz kontynuację swojej wypowiedzi.");
 
 			korwin.part3.forEach((x) => {
 				select3.addOptions(
-					new StringSelectMenuOptionBuilder()
-					.setLabel(x)
-					.setValue(x),
-				)
-			})
+					new StringSelectMenuOptionBuilder().setLabel(x).setValue(x)
+				);
+			});
 
-			const row3 = new ActionRowBuilder()
-				.addComponents(select3);
+			const row3 = new ActionRowBuilder().addComponents(select3);
 
 			// 4
 			const select4 = new StringSelectMenuBuilder()
-				.setCustomId('select4')
-				.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
+				.setCustomId("select4")
+				.setPlaceholder("Wybierz kontynuację swojej wypowiedzi.");
 
 			korwin.part4.forEach((x) => {
 				select4.addOptions(
-					new StringSelectMenuOptionBuilder()
-					.setLabel(x)
-					.setValue(x),
-				)
-			})
+					new StringSelectMenuOptionBuilder().setLabel(x).setValue(x)
+				);
+			});
 
-			const row4 = new ActionRowBuilder()
-				.addComponents(select4);
+			const row4 = new ActionRowBuilder().addComponents(select4);
 
 			// 5
 			const select5 = new StringSelectMenuBuilder()
-				.setCustomId('select5')
-				.setPlaceholder('Wybierz kontynuację swojej wypowiedzi.')
+				.setCustomId("select5")
+				.setPlaceholder("Wybierz kontynuację swojej wypowiedzi.");
 
 			korwin.part5.forEach((x) => {
 				select5.addOptions(
-					new StringSelectMenuOptionBuilder()
-					.setLabel(x)
-					.setValue(x),
-				)
-			})
+					new StringSelectMenuOptionBuilder().setLabel(x).setValue(x)
+				);
+			});
 
-			const row5 = new ActionRowBuilder()
-				.addComponents(select5);
+			const row5 = new ActionRowBuilder().addComponents(select5);
 
 			// 6
 			const select6 = new StringSelectMenuBuilder()
-				.setCustomId('select6')
-				.setPlaceholder('Wybierz zakończenie swojej wypowiedzi.')
+				.setCustomId("select6")
+				.setPlaceholder("Wybierz zakończenie swojej wypowiedzi.");
 
 			korwin.part6.forEach((x) => {
 				select6.addOptions(
-					new StringSelectMenuOptionBuilder()
-					.setLabel(x)
-					.setValue(x),
-				)
-			})
+					new StringSelectMenuOptionBuilder().setLabel(x).setValue(x)
+				);
+			});
 
-			const row6 = new ActionRowBuilder()
-				.addComponents(select6);
-
-
+			const row6 = new ActionRowBuilder().addComponents(select6);
 
 			const response = await interaction.editReply({
 				content: `_ _`,
-				components: [row1]
+				components: [row1],
 			});
 			///////////////////////////////////////////////////////////
 			/////////////////////////part1/////////////////////////////
 			///////////////////////////////////////////////////////////
 
-
 			const collector1 = response.createMessageComponentCollector({
 				componentType: ComponentType.StringSelect,
-				filter: i => i.user.id === interaction.user.id,
-				time: 3600000
+				filter: (i) => i.user.id === interaction.user.id,
+				time: 3600000,
 			});
 
-			collector1.on('collect', async i => {
+			collector1.on("collect", async (i) => {
 				selection1 = i.values[0];
 				await interaction.editReply({
 					content: `${selection1}`,
-					components: [row2]
+					components: [row2],
 				});
 				collector1.stop();
 				i.reply({
 					content: `Wybrano początek: \`${selection1}\``,
-					ephemeral: true
-				})
+					ephemeral: true,
+				});
 
 				///////////////////////////////////////////////////////////
 				/////////////////////////part2/////////////////////////////
@@ -181,21 +163,21 @@ module.exports = {
 
 				const collector2 = response.createMessageComponentCollector({
 					componentType: ComponentType.StringSelect,
-					filter: i => i.user.id === interaction.user.id,
-					time: 3600000
+					filter: (i) => i.user.id === interaction.user.id,
+					time: 3600000,
 				});
 
-				collector2.on('collect', async i => {
+				collector2.on("collect", async (i) => {
 					selection2 = i.values[0];
 					await interaction.editReply({
 						content: `${selection1} ${selection2}`,
-						components: [row3]
+						components: [row3],
 					});
 					collector2.stop();
 					i.reply({
 						content: `Wybrano kontynuację: \`${selection2}\``,
-						ephemeral: true
-					})
+						ephemeral: true,
+					});
 
 					///////////////////////////////////////////////////////////
 					/////////////////////////part3/////////////////////////////
@@ -203,21 +185,21 @@ module.exports = {
 
 					const collector3 = response.createMessageComponentCollector({
 						componentType: ComponentType.StringSelect,
-						filter: i => i.user.id === interaction.user.id,
-						time: 3600000
+						filter: (i) => i.user.id === interaction.user.id,
+						time: 3600000,
 					});
 
-					collector3.on('collect', async i => {
+					collector3.on("collect", async (i) => {
 						selection3 = i.values[0];
 						await interaction.editReply({
 							content: `${selection1} ${selection2} ${selection3}`,
-							components: [row4]
+							components: [row4],
 						});
 						collector3.stop();
 						i.reply({
 							content: `Wybrano kontynuację: \`${selection3}\``,
-							ephemeral: true
-						})
+							ephemeral: true,
+						});
 
 						///////////////////////////////////////////////////////////
 						/////////////////////////part4/////////////////////////////
@@ -225,21 +207,21 @@ module.exports = {
 
 						const collector4 = response.createMessageComponentCollector({
 							componentType: ComponentType.StringSelect,
-							filter: i => i.user.id === interaction.user.id,
-							time: 3600000
+							filter: (i) => i.user.id === interaction.user.id,
+							time: 3600000,
 						});
 
-						collector4.on('collect', async i => {
+						collector4.on("collect", async (i) => {
 							selection4 = i.values[0];
 							await interaction.editReply({
 								content: `${selection1} ${selection2} ${selection3} ${selection4},`,
-								components: [row5]
+								components: [row5],
 							});
 							collector4.stop();
 							i.reply({
 								content: `Wybrano kontynuację: \`${selection4}\``,
-								ephemeral: true
-							})
+								ephemeral: true,
+							});
 
 							///////////////////////////////////////////////////////////
 							/////////////////////////part5/////////////////////////////
@@ -247,21 +229,21 @@ module.exports = {
 
 							const collector5 = response.createMessageComponentCollector({
 								componentType: ComponentType.StringSelect,
-								filter: i => i.user.id === interaction.user.id,
-								time: 3600000
+								filter: (i) => i.user.id === interaction.user.id,
+								time: 3600000,
 							});
 
-							collector5.on('collect', async i => {
+							collector5.on("collect", async (i) => {
 								selection5 = i.values[0];
 								await interaction.editReply({
 									content: `${selection1} ${selection2} ${selection3} ${selection4}, ${selection5},`,
-									components: [row6]
+									components: [row6],
 								});
 								collector5.stop();
 								i.reply({
 									content: `Wybrano kontynuację: \`${selection5}\``,
-									ephemeral: true
-								})
+									ephemeral: true,
+								});
 
 								///////////////////////////////////////////////////////////
 								/////////////////////////part6/////////////////////////////
@@ -269,23 +251,21 @@ module.exports = {
 
 								const collector6 = response.createMessageComponentCollector({
 									componentType: ComponentType.StringSelect,
-									filter: i => i.user.id === interaction.user.id,
-									time: 3600000
+									filter: (i) => i.user.id === interaction.user.id,
+									time: 3600000,
 								});
 
-								collector6.on('collect', async i => {
+								collector6.on("collect", async (i) => {
 									selection6 = i.values[0];
 									await interaction.editReply({
 										content: `${selection1} ${selection2} ${selection3} ${selection4}, ${selection5}, ${selection6}`,
-										components: []
+										components: [],
 									});
 									collector6.stop();
 									i.reply({
 										content: `Wybrano zakończenie: \`${selection6}\``,
-										ephemeral: true
-									})
-
-
+										ephemeral: true,
+									});
 								});
 							});
 						});
@@ -294,8 +274,7 @@ module.exports = {
 			});
 		}
 
-		if (interaction.options.getSubcommand() == ('list')) {
-
+		if (interaction.options.getSubcommand() == "list") {
 			const file = new AttachmentBuilder("Data/korwin/korwin.png");
 
 			// const korwinEmbed1 = new EmbedBuilder()
@@ -324,9 +303,9 @@ module.exports = {
 			// 	.setDescription(`• ${korwin.part6.join('\n• ')}`)
 
 			interaction.reply({
-				ephemeral: true, files: [file]
-			})
+				ephemeral: true,
+				files: [file],
+			});
 		}
-
-	}
-}
+	},
+};
